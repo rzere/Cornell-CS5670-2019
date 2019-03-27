@@ -114,7 +114,7 @@ def getAccSize(ipv):
     # Create an accumulator image
     accWidth = int(math.ceil(maxX) - math.floor(minX))
     accHeight = int(math.ceil(maxY) - math.floor(minY))
-    print 'accWidth, accHeight:', (accWidth, accHeight)
+    print('accWidth, accHeight:', (accWidth, accHeight))
     translation = np.array([[1, 0, -minX], [0, 1, -minY], [0, 0, 1]])
 
     return accWidth, accHeight, channels, width, translation

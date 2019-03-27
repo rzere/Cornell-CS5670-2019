@@ -1,6 +1,7 @@
 import os
 import cv2
 import numpy as np
+import math
 
 def warpLocal(src, uv):
     '''
@@ -71,7 +72,17 @@ def computeSphericalWarpMappings(dstShape, f, k1, k2):
     # as output for your code. They should all have the shape
     # (img_height, img_width)
     # TODO-BLOCK-BEGIN
-    raise Exception("TODO in warp.py not implemented")
+    xHat = np.sin(xf) * np.cos(yf)
+    yHat = np.sin(yf)
+    zHat = np.cos(xf) * np.cos(yf)
+
+    xPrime = xHat / zHat
+    yPrime = yHat / zHat
+
+    r2 = (xPrime**2 + yPrime**2)
+    xt = xHat * (1 + k1*r2 + k1*r2**2)
+    yt = yHat * (1 + k1*r2 + k1*r2**2)
+
     # TODO-BLOCK-END
     # END TODO
     # Convert back to regular pixel coordinates

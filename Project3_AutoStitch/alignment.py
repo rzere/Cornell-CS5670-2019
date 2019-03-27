@@ -63,7 +63,7 @@ def computeHomography(f1, f2, matches, A_out=None):
     #BEGIN TODO 3
     #Fill the homography H with the appropriate elements of the SVD
     #TODO-BLOCK-BEGIN
-
+    H = Vt[-1,:].reshape(3,3)
     #TODO-BLOCK-END
     #END TODO
 

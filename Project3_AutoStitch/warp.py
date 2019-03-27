@@ -80,8 +80,8 @@ def computeSphericalWarpMappings(dstShape, f, k1, k2):
     yPrime = yHat / zHat
 
     r2 = (xPrime**2 + yPrime**2)
-    xt = xHat * (1 + k1*r2 + k1*r2**2)
-    yt = yHat * (1 + k1*r2 + k1*r2**2)
+    xt = xPrime * (1 + k1*r2 + k2*(r2**2))
+    yt = yPrime * (1 + k1*r2 + k2*(r2**2))
 
     # TODO-BLOCK-END
     # END TODO

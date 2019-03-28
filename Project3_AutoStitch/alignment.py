@@ -106,15 +106,15 @@ def alignPair(f1, f2, matches, m, nRANSAC, RANSACthresh):
 
     maxInliers = 0
     for i in range(nRANSAC):
-        if m == "eTranslate":
-            m1 = random.sample(matches, 1)
-            a_x, a_y = f1[m1[0].queryIdx].pt
-            b_x, b_y = f2[m1[0].trainIdx].pt
+        if m == eTranslate:
+            sample = random.sample(matches, 1)
+            a_x, a_y = f1[sample.queryIdx].pt
+            b_x, b_y = f2[sample.trainIdx].pt
             d_x = a_x - b_x
             d_y = a_y - b_y
             H = [[1, 0, d_x], [0, 1, d_y], [0, 0, 1]]
 
-        elif m == "eHomography":
+        elif m == eHomography:
             samples = random.sample(matches, 4)
             H = computeHomography(f1, f2, samples)
 
@@ -160,6 +160,20 @@ def getInliers(f1, f2, matches, M, RANSACthresh):
         #If so, append i to inliers
         #TODO-BLOCK-BEGIN
 
+        #trans = [M[0, 2], M[1, 2]]
+        #(a_x, a_y) = f1[m.queryIdx].pt
+        #(b_x, b_y) = f2[m.trainIdx].pt
+        #print(M)
+        #f1m = [[a_x, 0, 0], [0, a_y, 0], [0, 0, 1]]
+        #f2m = [[b_x, 0, 0], [0, b_y, 0], [0, 0, 1]]
+        #(a_x, a_y) = f1[m.queryIdx].pt
+        #f1m = (a_x, a_y, 1)
+        #f2m = (b_x, b_y, 1)
+
+        m = matches[i]
+        dist = np.linalg.norm(np.dot(M, f1[m.queryIdx].pt), f2[m.trainIdx].pt)
+        if RANSACthresh > dist:
+            inlier_indices.append(f1[m.queryIdx].pt)
         #TODO-BLOCK-END
         #END TODO
 
@@ -204,7 +218,7 @@ def leastSquaresFit(f1, f2, matches, m, inlier_indices):
             #Use this loop to compute the average translation vector
             #over all inliers.
             #TODO-BLOCK-BEGIN
-            raise Exception("TODO in alignment.py not implemented")
+            M = leastSquaresFit(f1, f2, matches, m, inlier_indices)
             #TODO-BLOCK-END
             #END TODO
 
@@ -219,7 +233,7 @@ def leastSquaresFit(f1, f2, matches, m, inlier_indices):
         #Compute a homography M using all inliers.
         #This should call computeHomography.
         #TODO-BLOCK-BEGIN
-        raise Exception("TODO in alignment.py not implemented")
+        M = computeHomography(f1, f2, inlier_indices)
         #TODO-BLOCK-END
         #END TODO
 

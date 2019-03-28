@@ -92,7 +92,6 @@ def alignPair(f1, f2, matches, m, nRANSAC, RANSACthresh):
         compute the least squares motion estimate using the inliers,
         and return as a transformation matrix M.
     '''
-
     #BEGIN TODO 4
     #Write this entire method.  You need to handle two types of
     #motion models, pure translations (m == eTranslation) and
@@ -104,7 +103,28 @@ def alignPair(f1, f2, matches, m, nRANSAC, RANSACthresh):
     #This function should also call get_inliers and, at the end,
     #least_squares_fit.
     #TODO-BLOCK-BEGIN
-    raise Exception("TODO in alignment.py not implemented")
+
+    maxInliers = 0
+    for i in range(nRANSAC):
+        if m == "eTranslate":
+            m1 = random.sample(matches, 1)
+            a_x, a_y = f1[m1[0].queryIdx].pt
+            b_x, b_y = f2[m1[0].trainIdx].pt
+            d_x = a_x - b_x
+            d_y = a_y - b_y
+            H = [[1, 0, d_x], [0, 1, d_y], [0, 0, 1]]
+
+        elif m == "eHomography":
+            samples = random.sample(matches, 4)
+            H = computeHomography(f1, f2, samples)
+
+        inlier_indices = getInliers(f1, f2, matches, H, RANSACthresh)
+        if len(inlier_indices) > maxInliers:
+            max_inlier_indices = inlier_indices
+            maxInliers = len(inlier_indices)
+
+    M = leastSquaresFit(f1, f2, matches, m, max_inlier_indices)
+
     #TODO-BLOCK-END
     #END TODO
     return M
@@ -139,7 +159,7 @@ def getInliers(f1, f2, matches, M, RANSACthresh):
         #by M, is within RANSACthresh of its match in f2.
         #If so, append i to inliers
         #TODO-BLOCK-BEGIN
-        raise Exception("TODO in alignment.py not implemented")
+
         #TODO-BLOCK-END
         #END TODO
 

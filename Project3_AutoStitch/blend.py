@@ -4,7 +4,6 @@ import sys
 import cv2
 import numpy as np
 
-
 class ImageInfo:
     def __init__(self, name, img, position):
         self.name = name
@@ -29,7 +28,31 @@ def imageBoundingBox(img, M):
     """
     #TODO 8
     #TODO-BLOCK-BEGIN
-    raise Exception("TODO in blend.py not implemented")
+    #img_t = img.dot(M)
+    #minX, minY, maxX, maxY =
+
+    img_x = len(img[0])
+    img_y = len(img)
+    img_m = []
+    xform = []
+    for i in range(img_y):
+        for j in range(img_x):
+            img_m[0,0] = img_x
+            img_m[1,0] = img_y
+            img_m[2,0] = 1
+            img_t = img_m * M
+            xform[img_t[0],img_t[1]] = img_m[i,j]
+            minX, minY = float("inf"), float("inf")
+            maxX, maxY = float("-inf"), float("-inf")
+            if x < minX:
+                minX = x
+            if y < minY:
+                minY = y
+            # Set max coords
+            if x > maxX:
+                maxX = x
+            elif y > maxY:
+                maxY = y
     #TODO-BLOCK-END
     return int(minX), int(minY), int(maxX), int(maxY)
 
@@ -107,7 +130,7 @@ def getAccSize(ipv):
         # BEGIN TODO 9
         # add some code here to update minX, ..., maxY
         #TODO-BLOCK-BEGIN
-        raise Exception("TODO in blend.py not implemented")
+
         #TODO-BLOCK-END
         # END TODO
 

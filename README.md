@@ -1,7 +1,3 @@
 # Cornell-CS5670-2019
 
-Published assignment 1
-
-Published assignment 2
-
-Published assignment 3
+Assignments for CS5670: Computer Vision class at Cornell Tech, Fall 2019
